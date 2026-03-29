@@ -8,6 +8,26 @@
 
 .ride-summary-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
 .ride-summary-item:last-child { border-bottom: none; }
+
+/* Fake Map Box */
+.map-box {
+    background: #e2e8f0; 
+    border-radius: 20px; 
+    height: 200px; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    justify-content: center; 
+    text-align: center;
+    border: 2px dashed #cbd5e1;
+    transition: all 0.3s;
+}
+.map-box:hover { border-color: var(--primary); background: rgba(16,185,129,0.05); }
+.btn-map {
+    background: #4285F4; color: white; border: none; border-radius: 50px; padding: 10px 25px; font-weight: 600;
+    transition: 0.3s; text-decoration: none; display: inline-flex; align-items: center;
+}
+.btn-map:hover { background: #3367d6; color: white; transform: translateY(-2px); }
 </style>
 
 <div class="container py-5 mt-4">
@@ -22,17 +42,14 @@
                 {% endif %}
             </div>
             
-            <!-- 🌟 NEW: GOOGLE MAP ROUTING 🌟 -->
-            <div class="rounded-4 overflow-hidden shadow-sm mb-4 border">
-                <iframe 
-                    src="https://www.google.com/maps/dir/Satara+ST+Stand/{{ tour.name }}+Satara/" 
-                    width="100%" 
-                    height="300" 
-                    style="border:0;" 
-                    allowfullscreen="" 
-                    loading="lazy" 
-                    referrerpolicy="no-referrer-when-downgrade">
-                </iframe>
+            <!-- 🌟 INTERACTIVE ROUTE BUTTON 🌟 -->
+            <div class="map-box mb-4">
+                <i class="bi bi-geo-alt fs-1 text-muted mb-2"></i>
+                <p class="text-muted mb-3 small">Satara ST Stand ➡️ {{ tour.name }}</p>
+                <!-- This link opens Google Maps with the exact route on the user's phone/computer -->
+                <a href="https://www.google.com/maps/dir/Satara+ST+Stand/{{ tour.name }}+Satara/" target="_blank" class="btn-map">
+                    <i class="bi bi-map me-2"></i> Open Route in Google Maps
+                </a>
             </div>
 
             <div class="d-flex align-items-center gap-3 mb-3 flex-wrap">
@@ -48,7 +65,7 @@
                 <i class="bi bi-info-circle-fill fs-4 text-primary mt-1"></i>
                 <div>
                     <h6 class="fw-bold mb-1">What's Included in this package?</h6>
-                    <p class="text-muted small mb-0">Driver allowance, Fuel, Parking. (Entry tickets to monuments/kaas not included).</p>
+                    <p class="text-muted small mb-0">Driver allowance, Fuel, Parking. (Entry tickets to monuments not included).</p>
                 </div>
             </div>
         </div>
