@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Booking Success{% endblock %}
+
+{% block content %}
+<style>
+.navbar { background: rgba(255, 255, 255, 0.95) !important; backdrop-filter: blur(20px); box-shadow: 0 4px 30px rgba(0,0,0,0.05); padding: 10px 0; }
+.nav-brand { color: var(--dark) !important; } .nav-link { color: #475569 !important; } .nav-link:hover { color: var(--primary) !important; }
+</style>
+
+<div class="container text-center py-5 my-5">
+    
+    <!-- THIS IS YOUR ORIGINAL SUCCESS MESSAGE (KEPT EXACTLY AS YOU WANTED) -->
+    <div class="fs-1 text-success mb-4"><i class="bi bi-patch-check-fill"></i></div>
+    <h1 class="fw-bold">Booking Received!</h1>
+    <p class="text-muted fs-5 mb-5">Thank you! Our team will contact you shortly to confirm your Satara tour.</p>
+
+    <!-- THIS IS THE NEW WHATSAPP PART ADDED UNDERNEATH -->
+    <div class="row justify-content-center mb-4">
+        <div class="col-lg-6">
+            <div class="bg-light rounded-4 p-4 text-start mb-4">
+                <p class="small text-muted mb-1 fw-bold">Your Booking Details:</p>
+                <ul class="list-unstyled mb-0">
+                    <li class="mb-1"><strong>Name:</strong> {{ name }}</li>
+                    <li class="mb-1"><strong>Phone:</strong> {{ phone }}</li>
+                    <li class="mb-1"><strong>Tour:</strong> {{ tour }}</li>
+                    <li><strong>Date:</strong> {{ date }}</li>
+                </ul>
+            </div>
+
+            <p class="text-muted small mb-3"><b>Faster Confirmation:</b> Tap below to send these details directly to our WhatsApp.</p>
+            
+            <!-- THE GREEN WHATSAPP BUTTON -->
+            <a href="https://wa.me/919209138466?text=Hi SataraGo! I just booked a tour.%0A%0AName: {{ name }}%0APhone: {{ phone }}%0ATour: {{ tour }}%0ADate: {{ date }}%0APlease confirm." 
+               class="btn btn-success btn-lg rounded-pill px-5 shadow" target="_blank">
+                <i class="bi bi-whatsapp me-2"></i> Send via WhatsApp
+            </a>
+        </div>
+    </div>
+
+    <a href="{% url 'home' %}" class="btn btn-dark rounded-pill px-5 mt-3">Back to Home</a>
+</div>
+{% endblock %}

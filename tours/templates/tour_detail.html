@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% block title %}{{ tour.name }}{% endblock %}
+
+{% block content %}
+<style>
+.navbar { background: rgba(255, 255, 255, 0.95) !important; backdrop-filter: blur(20px); box-shadow: 0 4px 30px rgba(0,0,0,0.05); padding: 10px 0; }
+.nav-brand { color: var(--dark) !important; } .nav-link { color: #475569 !important; } .nav-link:hover { color: var(--primary) !important; }
+
+.ride-summary-item { display: flex; justify-content: space-between; padding: 12px 0; border-bottom: 1px solid #f1f5f9; }
+.ride-summary-item:last-child { border-bottom: none; }
+</style>
+
+<div class="container py-5 mt-4">
+    <div class="row g-5">
+        <!-- LEFT: IMAGE & DETAILS -->
+        <div class="col-lg-7">
+            <div class="rounded-4 overflow-hidden shadow-lg mb-4" style="height: 450px;">
+                {% if tour.image %}
+                    <img src="{{ tour.image.url }}" class="w-100 h-100" style="object-fit: cover;" alt="{{ tour.name }}">
+                {% endif %}
+            </div>
+            
+            <div class="d-flex align-items-center gap-3 mb-3 flex-wrap">
+                <span class="badge bg-dark text-white fs-6 px-3 py-2 rounded-pill">{{ tour.get_vehicle_type_display }}</span>
+                <span class="badge bg-success bg-opacity-10 text-success fs-6 px-3 py-2 rounded-pill">{{ tour.package_type }}</span>
+                <span class="badge bg-primary bg-opacity-10 text-primary fs-6 px-3 py-2 rounded-pill"><i class="bi bi-clock me-1"></i>{{ tour.duration_hours }} Hours</span>
+            </div>
+            
+            <h1 class="fw-bold display-5 mb-3" style="color: var(--dark);">{{ tour.name }}</h1>
+            <p class="text-muted fs-5 lh-lg">{{ tour.description }}</p>
+            
+            <div class="bg-light rounded-4 p-4 mt-4 d-flex align-items-start gap-3">
+                <i class="bi bi-info-circle-fill fs-4 text-primary mt-1"></i>
+                <div>
+                    <h6 class="fw-bold mb-1">What's Included in this package?</h6>
+                    <p class="text-muted small mb-0">Driver allowance, Fuel, Parking. (Entry tickets to monuments/kaas not included).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT: STICKY BOOKING FORM (UBER STYLE) -->
+        <div class="col-lg-5">
+            <div class="card border-0 shadow-lg rounded-4 p-4" style="position: sticky; top: 100px; border-radius: 24px !important;">
+                
+                <!-- UBER STYLE RIDE SUMMARY -->
+                <div class="bg-light rounded-3 p-3 mb-4">
+                    <h6 class="fw-bold text-dark mb-3">Ride Summary</h6>
+                    <div class="ride-summary-item">
+                        <span class="text-muted small">Vehicle Type</span>
+                        <span class="fw-semibold small">{{ tour.get_vehicle_type_display }}</span>
+                    </div>
+                    <div class="ride-summary-item">
+                        <span class="text-muted small">Package</span>
+                        <span class="fw-semibold small">{{ tour.package_type }}</span>
+                    </div>
+                    <div class="ride-summary-item">
+                        <span class="text-muted small">Duration</span>
+                        <span class="fw-semibold small">{{ tour.duration_hours }} Hours</span>
+                    </div>
+                    <div class="ride-summary-item" style="border-bottom: none;">
+                        <span class="fw-bold text-dark">Total Fare</span>
+                        <span class="fw-bold text-success fs-5">₹{{ tour.price }}</span>
+                    </div>
+                </div>
+
+                <h5 class="fw-bold mb-3">Enter Your Details</h5>
+                <form method="POST" class="mt-2">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-muted">FULL NAME</label>
+                        <input type="text" name="name" class="form-control form-control-custom" placeholder="John Doe" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-muted">PHONE NUMBER</label>
+                        <input type="tel" name="phone" class="form-control form-control-custom" placeholder="+91 98765 43210" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label small fw-bold text-muted">TRAVEL DATE</label>
+                        <input type="date" name="date" class="form-control form-control-custom" required>
+                    </div>
+                    <div class="mb-4">
+                        <label class="form-label small fw-bold text-muted">PICKUP LOCATION</label>
+                        <input type="text" name="pickup" class="form-control form-control-custom" placeholder="Satara ST Stand / Hotel Name" required>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-nav btn-lg w-100 py-3 mt-2">
+                        Confirm Booking <i class="bi bi-check-circle ms-2"></i>
+                    </button>
+                    <p class="text-center text-muted small mt-3 mb-0"><i class="bi bi-shield-check me-1"></i>Free cancellation up to 12 hrs before</p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

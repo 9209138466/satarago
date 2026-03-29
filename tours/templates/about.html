@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% block title %}About Us{% endblock %}
+
+{% block content %}
+<style>
+.navbar { background: rgba(255, 255, 255, 0.95) !important; backdrop-filter: blur(20px); box-shadow: 0 4px 30px rgba(0,0,0,0.05); padding: 10px 0; }
+.nav-brand { color: var(--dark) !important; } .nav-link { color: #475569 !important; } .nav-link:hover { color: var(--primary) !important; }
+
+/* Custom Timeline for your handwritten note */
+.step-line { position: relative; padding-left: 40px; border-left: 3px solid #e2e8f0; }
+.step-line::before { content: ''; position: absolute; left: -12px; top: 0; width: 20px; height: 20px; border-radius: 50%; background: var(--primary); border: 4px solid #fff; box-shadow: 0 0 0 3px var(--primary); }
+</style>
+
+<div class="container py-5 mt-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
+            
+            <!-- Header -->
+            <div class="text-center mb-5">
+                <p class="text-uppercase text-success fw-bold small">Who We Are</p>
+                <h1 class="fw-bold display-5 mb-3">Making Satara Accessible to Everyone</h1>
+                <p class="text-muted fs-5 mx-auto" style="max-width: 700px;">We started with a simple observation: Tourists love Satara, but local transport is confusing and unreliable. SataraGo was born to fix that.</p>
+            </div>
+
+            <!-- THE STICKY NOTE TIMELINE (Your Idea -> Funding flow) -->
+            <div class="bg-light rounded-4 p-5 mb-5 shadow-sm">
+                <h4 class="fw-bold mb-4 text-center">Our Startup Journey</h4>
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <div class="step-line pb-4">
+                            <h6 class="fw-bold text-dark">1. The Idea 💡</h6>
+                            <p class="text-muted small mb-0">Noticed tourists struggling to find reliable cabs for Kaas and Thoseghar.</p>
+                        </div>
+                        <div class="step-line pb-4">
+                            <h6 class="fw-bold text-dark">2. Research & Plan 🔍</h6>
+                            <p class="text-muted small mb-0">Spent months talking to local drivers, hotel owners, and tourists to understand the exact pain points.</p>
+                        </div>
+                        <div class="step-line pb-4">
+                            <h6 class="fw-bold text-dark">3. Launch 🚀</h6>
+                            <p class="text-muted small mb-0">Built the simplest version of SataraGo and launched with 5 trusted local drivers.</p>
+                        </div>
+                        <div class="step-line">
+                            <h6 class="fw-bold text-dark">4. Onboarding Users 👥</h6>
+                            <p class="text-muted small mb-0">Helped our first 100 tourists explore Satara without a single bargaining argument!</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <div class="step-line pb-4">
+                            <h6 class="fw-bold text-dark">5. Improve 🛠️</h6>
+                            <p class="text-muted small mb-0">Added live tracking, fixed pricing, and better vehicle options based on customer feedback.</p>
+                        </div>
+                        <div class="step-line pb-4">
+                            <h6 class="fw-bold text-dark">6. Growth 📈</h6>
+                            <p class="text-muted small mb-0">Expanding to cover every hidden gem in the Satara district, from forts to waterfalls.</p>
+                        </div>
+                        <div class="step-line">
+                            <h6 class="fw-bold text-success">7. The Future 🌟</h6>
+                            <p class="text-muted small mb-0">Aiming to empower local drivers financially and put Satara on the map as a digital-first tourist hub.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Why Choose Us -->
+            <div class="row g-4 mt-3">
+                <div class="col-md-4">
+                    <div class="text-center p-4">
+                        <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;"><i class="bi bi-shield-lock fs-3 text-success"></i></div>
+                        <h5 class="fw-bold">100% Verified</h5>
+                        <p class="text-muted small">Every driver is background checked. Every vehicle is fitness certified. Your safety is our priority.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center p-4">
+                        <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;"><i class="bi bi-currency-rupee fs-3 text-success"></i></div>
+                        <h5 class="fw-bold">Fixed Prices</h5>
+                        <p class="text-muted small">What you see is what you pay. No surge pricing, no midnight bargaining. Transparent tours.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="text-center p-4">
+                        <div class="bg-success bg-opacity-10 rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 70px; height: 70px;"><i class="bi bi-people fs-3 text-success"></i></div>
+                        <h5 class="fw-bold">Local Experts</h5>
+                        <p class="text-muted small">Our drivers aren't just drivers; they are local guides who know the best spots and food joints.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+{% endblock %}

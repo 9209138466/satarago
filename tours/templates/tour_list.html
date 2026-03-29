@@ -1,0 +1,144 @@
+{% extends 'base.html' %}
+{% block title %}Explore Tours{% endblock %}
+
+{% block content %}
+<style>
+.navbar { background: rgba(255, 255, 255, 0.95) !important; backdrop-filter: blur(20px); box-shadow: 0 4px 30px rgba(0,0,0,0.05); padding: 10px 0; }
+.nav-brand { color: var(--dark) !important; } .nav-link { color: #475569 !important; } .nav-link:hover { color: var(--primary) !important; }
+
+/* PLOT/SPOT CARDS */
+.spot-card {
+    position: relative; border-radius: 20px; overflow: hidden;
+    height: 250px; cursor: pointer;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+    transition: all 0.4s ease; background-color: #e2e8f0;
+}
+.spot-card:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+.spot-bg { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+.spot-card:hover .spot-bg { transform: scale(1.1); }
+.spot-overlay {
+    position: absolute; bottom: 0; left: 0; right: 0; top: 0;
+    background: linear-gradient(to top, rgba(15,23,42,0.9), rgba(15,23,42,0.1));
+    display: flex; flex-direction: column; justify-content: flex-end; padding: 25px; color: white;
+}
+.spot-overlay h4 { font-weight: 700; margin-bottom: 0; }
+
+/* RIDE SELECTOR CARDS (UBER STYLE) */
+.ride-card {
+    background: white; border: 2px solid #f1f5f9; border-radius: 20px;
+    padding: 25px; margin-bottom: 15px; cursor: pointer;
+    transition: all 0.3s ease; display: flex; align-items: center; justify-content: space-between;
+}
+.ride-card:hover { border-color: var(--primary); background: rgba(16,185,129,0.03); transform: translateX(5px); }
+.ride-icon { font-size: 2.5rem; margin-right: 20px; }
+.ride-details h5 { font-weight: 700; margin-bottom: 2px; color: var(--dark); }
+.ride-details p { margin-bottom: 0; color: #64748b; font-size: 0.9rem; }
+.ride-price { font-size: 1.4rem; font-weight: 800; color: var(--dark); white-space: nowrap; }
+</style>
+
+<div class="container py-5 mt-5">
+
+    <!-- ==================== STEP 1: CHOOSE YOUR PLOT/SPOT ==================== -->
+    {% if not selected_spot %}
+        <div class="text-center mb-5">
+            <p class="text-uppercase text-success fw-bold small">Step 1</p>
+            <h2 class="fw-bold display-6">Where do you want to go?</h2>
+            <p class="text-muted">Select a destination to see available rides</p>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            {% for category in categories %}
+            <div class="col-md-6 col-lg-4">
+                <!-- Links pass the category to the URL (e.g., ?spot=Nature) -->
+                <a href="?spot={{ category }}" class="text-decoration-none">
+                    <div class="spot-card">
+                        <!-- Assign images based on category -->
+                        {% if category == 'Nature' %}
+                            <img src="https://images.unsplash.com/photo-1597212618440-806262de4f6b?w=800&q=80" class="spot-bg" alt="Nature">
+                            <div class="spot-overlay">
+                                <h4>🌸 {{ category }} & Flowers</h4>
+                                <small class="opacity-75">Kaas Plateau, Vasota</small>
+                            </div>
+                        {% elif category == 'Waterfall' %}
+                            <img src="https://images.unsplash.com/photo-1432405972618-c6b0cfba8793?w=800&q=80" class="spot-bg" alt="Waterfalls">
+                            <div class="spot-overlay">
+                                <h4>💧 {{ category }}s</h4>
+                                <small class="opacity-75">Thoseghar, Vajrai</small>
+                            </div>
+                        {% elif category == 'Fort' %}
+                            <img src="https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=800&q=80" class="spot-bg" alt="Forts">
+                            <div class="spot-overlay">
+                                <h4>🏰 Historical {{ category }}s</h4>
+                                <small class="opacity-75">Sajjangad, Ajinkyatara</small>
+                            </div>
+                        {% else %}
+                            <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" class="spot-bg" alt="Spiritual">
+                            <div class="spot-overlay">
+                                <h4>🙏 {{ category }}</h4>
+                                <small class="opacity-75">Temples & Spiritual Sites</small>
+                            </div>
+                        {% endif %}
+                    </div>
+                </a>
+            </div>
+            {% empty %}
+            <div class="col-12 text-center">
+                <h4 class="text-muted">No destinations added yet.</h4>
+                <a href="/admin/tours/tour/add/" class="btn btn-dark mt-3 rounded-pill px-4">Add Tours in Admin</a>
+            </div>
+            {% endfor %}
+        </div>
+
+    <!-- ==================== STEP 2: CHOOSE YOUR RIDE (UBER STYLE) ==================== -->
+    {% else %}
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                
+                <!-- Back Button -->
+                <a href="{% url 'all_tours' %}" class="btn btn-outline-dark rounded-pill px-4 mb-4">
+                    <i class="bi bi-arrow-left me-2"></i> Back to Destinations
+                </a>
+
+                <div class="mb-4">
+                    <p class="text-uppercase text-success fw-bold small">Step 2</p>
+                    <h2 class="fw-bold">Choose your ride for <span class="text-success">{{ selected_spot }}s</span></h2>
+                </div>
+
+                <!-- Ride Cards -->
+                {% for tour in tours %}
+                <a href="{% url 'tour_detail' tour.id %}" class="text-decoration-none text-dark">
+                    <div class="ride-card">
+                        <div class="d-flex align-items-center">
+                            <!-- Vehicle Emoji -->
+                            {% if tour.vehicle_type == 'SUV' %}
+                                <div class="ride-icon">🚙</div>
+                            {% elif tour.vehicle_type == 'Auto' %}
+                                <div class="ride-icon">🛺</div>
+                            {% elif tour.vehicle_type == 'Tempo' %}
+                                <div class="ride-icon">🚐</div>
+                            {% else %}
+                                <div class="ride-icon">🚗</div>
+                            {% endif %}
+                            
+                            <div class="ride-details">
+                                <h5>{{ tour.get_vehicle_type_display }}</h5>
+                                <p><span class="badge bg-success bg-opacity-10 text-success rounded-pill me-2">{{ tour.package_type }}</span> {{ tour.duration_hours }} Hours • {{ tour.description|truncatewords:8 }}</p>
+                            </div>
+                        </div>
+                        <div class="ride-price">₹{{ tour.price }}</div>
+                    </div>
+                </a>
+                {% empty %}
+                <div class="text-center py-5 bg-light rounded-4">
+                    <i class="bi bi-exclamation-circle fs-1 text-muted"></i>
+                    <h5 class="mt-3 text-muted">No rides available for this destination yet.</h5>
+                    <a href="/admin/tours/tour/add/" class="btn btn-sm btn-dark mt-2 rounded-pill">Add a Ride</a>
+                </div>
+                {% endfor %}
+
+            </div>
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}
