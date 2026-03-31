@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load static %}
 {% block title %}Home{% endblock %}
 {% block content %}
 
@@ -36,17 +37,6 @@
         transition: all 0.3s ease;
     }
     .step-card:hover .step-icon { background: var(--primary); color: #fff; }
-
-    /* --- TESTIMONIAL --- */
-    .testimonial-box {
-        background: white; border-radius: 24px; padding: 40px;
-        box-shadow: 0 15px 50px rgba(0,0,0,0.05);
-        border: 1px solid #f1f5f9; position: relative;
-    }
-    .testimonial-box::before {
-        content: '\201C'; position: absolute; top: 10px; left: 30px;
-        font-size: 8rem; color: rgba(16,185,129,0.1); font-family: serif; line-height: 1;
-    }
 
     /* --- FINAL CTA --- */
     .cta-final {
@@ -94,7 +84,7 @@
     </div>
 </section>
 
-<!-- ==================== 2. QUICK CATEGORIES ==================== -->
+<!-- ==================== 2. QUICK CATEGORIES (REAL IMAGES) ==================== -->
 <section class="py-5 bg-light">
     <div class="container">
         <div class="text-center mb-5">
@@ -105,7 +95,7 @@
             <div class="col-md-6 col-lg-3">
                 <a href="{% url 'all_tours' %}" class="text-decoration-none">
                     <div class="category-card">
-                        <img src="https://images.unsplash.com/photo-1597212618440-806262de4f6b?w=800&q=80" class="category-bg" alt="Nature">
+                        <img src="{% static 'images/kaas.jpg' %}" class="category-bg" alt="Nature">
                         <div class="category-overlay">
                             <h5 class="fw-bold mb-1">🌸 Nature & Flowers</h5>
                             <small class="opacity-75">Kaas, Vasota</small>
@@ -116,7 +106,7 @@
             <div class="col-md-6 col-lg-3">
                 <a href="{% url 'all_tours' %}" class="text-decoration-none">
                     <div class="category-card">
-                        <img src="https://images.unsplash.com/photo-1432405972618-c6b0cfba8793?w=800&q=80" class="category-bg" alt="Waterfalls">
+                        <img src="{% static 'images/thoseghar.jpg' %}" class="category-bg" alt="Waterfalls">
                         <div class="category-overlay">
                             <h5 class="fw-bold mb-1">💧 Waterfalls</h5>
                             <small class="opacity-75">Thoseghar, Vajrai</small>
@@ -127,7 +117,7 @@
             <div class="col-md-6 col-lg-3">
                 <a href="{% url 'all_tours' %}" class="text-decoration-none">
                     <div class="category-card">
-                        <img src="https://images.unsplash.com/photo-1595815771614-ade9d652a65d?w=800&q=80" class="category-bg" alt="Forts">
+                        <img src="{% static 'images/sajjangad.jpg' %}" class="category-bg" alt="Forts">
                         <div class="category-overlay">
                             <h5 class="fw-bold mb-1">🏰 Historical Forts</h5>
                             <small class="opacity-75">Sajjangad, Ajinkyatara</small>
@@ -138,7 +128,7 @@
             <div class="col-md-6 col-lg-3">
                 <a href="{% url 'all_tours' %}" class="text-decoration-none">
                     <div class="category-card">
-                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800&q=80" class="category-bg" alt="Dams">
+                        <img src="{% static 'images/temple.jpg' %}" class="category-bg" alt="Dams">
                         <div class="category-overlay">
                             <h5 class="fw-bold mb-1">⛰️ Dams & Lakes</h5>
                             <small class="opacity-75">Koyna, Dhom</small>
@@ -179,7 +169,11 @@
                             </div>
                         {% endif %}
                         <div class="card-img-overlay-custom d-flex justify-content-between align-items-end">
-                            <span class="badge bg-white text-dark py-2 px-3 rounded-pill shadow-sm fw-semibold">{{ tour.get_vehicle_type_display }}</span>
+                            {% if tour.category == 'Student' %}
+                                <span class="badge bg-danger py-2 px-3 rounded-pill shadow-sm fw-semibold">🎓 Student Special</span>
+                            {% else %}
+                                <span class="badge bg-white text-dark py-2 px-3 rounded-pill shadow-sm fw-semibold">{{ tour.get_vehicle_type_display }}</span>
+                            {% endif %}
                         </div>
                     </div>
                     <div class="card-body d-flex flex-column flex-grow-1 p-4">
@@ -247,7 +241,6 @@
     <div class="container">
         <div class="cta-final p-5 p-lg-5 text-center text-white">
             <div class="position-relative" style="z-index: 2;">
-                <!-- Removed Fake Testimonial, replaced with honest startup message -->
                 <h2 class="fw-bold display-5 mb-3">We Are Just Getting Started!</h2>
                 <p class="text-secondary fs-5 mb-4 mx-auto" style="max-width: 600px;">We are a new startup dedicated to making Satara tourism easy. Book our initial tours and help us grow!</p>
                 <a href="{% url 'all_tours' %}" class="btn btn-nav btn-lg px-5 py-3 mt-2 shadow-lg">

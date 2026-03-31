@@ -6,6 +6,7 @@ class Tour(models.Model):
         ('Fort', 'Historical Forts'),
         ('Waterfall', 'Waterfalls'),
         ('Spiritual', 'Spiritual & Temples'),
+        ('Student', '🎓 Student Special'),
     )
     VEHICLE_CHOICES = (
         ('Sedan', '🚗 Sedan (Swift Dzire)'),

@@ -4,7 +4,7 @@ from django.contrib.auth import login as auth_login
 from .models import Tour, Booking
 
 def home(request):
-    featured_tours = Tour.objects.filter(is_active=True)[:3]
+    featured_tours = Tour.objects.filter(is_active=True)[:4]
     return render(request, 'home.html', {'featured_tours': featured_tours})
 
 def all_tours(request):
